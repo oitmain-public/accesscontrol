@@ -16,6 +16,8 @@
   "scripts": {
     "clean": "rimraf ./lib",
     "build": "npm run clean && mkdirp ./lib && tsc",
+    "dist": "npm run build && mkdirp ./dist && ./node_modules/.bin/browserify lib/AccessControl.js --standalone AccessControl | derequire > dist/accesscontrol.js && echo '✔ Assets built!'",
+    "dist-min": "npm run dist && cat dist/accesscontrol.js | ./node_modules/.bin/uglifyjs -cm -o dist/accesscontrol.min.js 2> /dev/null && echo '✔ Assets built!'",
     "test": "npm run build && node test",
     "docs": "docma -c ./docma.config.json"
   },
@@ -61,7 +63,10 @@
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "rimraf": "^2.6.1",
-    "typescript": "^2.2.1"
+    "typescript": "^2.2.1",
+    "uglifyjs": "2.4.10",
+    "browserify": "13.0.1",
+    "derequire": "2.0.6"
   },
   "dependencies": {
     "notation": "^1.0.0"
